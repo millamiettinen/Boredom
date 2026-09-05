@@ -93,6 +93,24 @@ wilcox_test <- wilcox.test(
 
 wilcox_test
 
+# Save summary statistics and test result
+
+results_summary <- data.frame(
+  HB_median = median(analysis_data$HB_mean),
+  HB_IQR = IQR(analysis_data$HB_mean),
+  LB_median = median(analysis_data$LB_mean),
+  LB_IQR = IQR(analysis_data$LB_mean),
+  Wilcoxon_V = unname(wilcox_test$statistic),
+  p_value = wilcox_test$p.value,
+  n = nrow(analysis_data)
+)
+
+write.csv(
+  results_summary,
+  "analysis/remnant_power_results.csv",
+  row.names = FALSE
+)
+
 # Prepare data for visualization
 plot_data <- analysis_data %>%
   select(ID, HB_mean, LB_mean) %>%
