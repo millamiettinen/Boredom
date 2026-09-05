@@ -27,6 +27,14 @@ cleaned_data_2026 <- lapply(data_2026, preprocess_data)
 cleaned_balance_2024 <- preprocess_data(balance_output_2024)
 cleaned_balance_2026 <- preprocess_data(balance_output_2026)
 
+# RemnantPower variables are converted to numeric because the 2024 Excel file
+# imports these values as character, whereas the 2026 file imports them as numeric.
+cleaned_balance_2024 <- cleaned_balance_2024 %>%
+  mutate(across(starts_with("RemnantPower"), as.numeric))
+
+cleaned_balance_2026 <- cleaned_balance_2026 %>%
+  mutate(across(starts_with("RemnantPower"), as.numeric))
+
 # Check that the number of imported CSV files is unchanged
 stopifnot(length(cleaned_data_2024) == length(data_2024))
 stopifnot(length(cleaned_data_2026) == length(data_2026))
@@ -56,4 +64,3 @@ stopifnot(length(cleaned_data_2026) == 199)
 # Check the expected dimensions of the balance-output datasets
 stopifnot(all(dim(cleaned_balance_2024) == c(27, 51)))
 stopifnot(all(dim(cleaned_balance_2026) == c(14, 51)))
-
