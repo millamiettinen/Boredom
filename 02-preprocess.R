@@ -27,6 +27,9 @@ cleaned_data_2026 <- lapply(data_2026, preprocess_data)
 cleaned_balance_2024 <- preprocess_data(balance_output_2024)
 cleaned_balance_2026 <- preprocess_data(balance_output_2026)
 
+# Apply preprocessing to the 2024 LimeSurvey dataset
+cleaned_limesurvey_2024 <- preprocess_data(limesurvey_2024)
+
 # RemnantPower variables are converted to numeric because the 2024 Excel file
 # imports these values as character, whereas the 2026 file imports them as numeric.
 cleaned_balance_2024 <- cleaned_balance_2024 %>%
@@ -56,6 +59,10 @@ stopifnot(
 stopifnot(
   identical(dim(cleaned_balance_2026), dim(balance_output_2026))
 )
+# Check that the 2024 LimeSurvey dimensions are unchanged
+stopifnot(
+  identical(dim(cleaned_limesurvey_2024), dim(limesurvey_2024))
+)
 
 # Check that the cleaned datasets contain the expected number of CSV files
 stopifnot(length(cleaned_data_2024) == 282)
@@ -64,3 +71,4 @@ stopifnot(length(cleaned_data_2026) == 199)
 # Check the expected dimensions of the balance-output datasets
 stopifnot(all(dim(cleaned_balance_2024) == c(27, 51)))
 stopifnot(all(dim(cleaned_balance_2026) == c(14, 51)))
+stopifnot(all(dim(cleaned_limesurvey_2024) == c(32, 100)))

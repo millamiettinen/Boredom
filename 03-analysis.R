@@ -6,6 +6,9 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
+# Create the output directory if it does not already exist
+dir.create("analysis", showWarnings = FALSE)
+
 # Select participant ID and RemnantPower variables needed for the analysis
 remnant_2024 <- cleaned_balance_2024 %>%
   select(ID, starts_with("RemnantPower")) %>%
